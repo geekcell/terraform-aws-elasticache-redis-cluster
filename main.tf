@@ -71,7 +71,7 @@ resource "aws_elasticache_replication_group" "redis" {
 }
 
 module "cloudwatch_log_group" {
-  source   = "../terraform-aws-cloudwatch-log-group"
+  source   = "github.com/geekcell/terraform-aws-cloudwatch-log-group?ref=main"
   for_each = toset(var.log_type)
 
   name = "/elasticache-${var.engine}/cluster/${var.replication_group_id}/log/${each.key}"
@@ -84,13 +84,13 @@ module "elasticache_parameter_group" {
 }
 
 module "kms" {
-  source = "../terraform-aws-kms"
+  source = "github.com/geekcell/terraform-aws-kms?ref=main"
 
   alias = format("alias/%s", "elasticache/cluster/${var.engine}/${var.replication_group_id}")
 }
 
 module "sns" {
-  source = "github.com/geekcell/terraform-aws-sns-email-notification"
+  source = "github.com/geekcell/terraform-aws-sns-email-notification?ref=main"
 
   name = var.replication_group_id
 
