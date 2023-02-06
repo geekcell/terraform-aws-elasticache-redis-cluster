@@ -37,7 +37,7 @@ resource "aws_elasticache_replication_group" "redis" {
 
   # Network
   port               = var.port
-  security_group_ids = [var.security_group_ids]
+  security_group_ids = var.security_group_ids
   subnet_group_name  = var.vpc_subnet_group_name
 
   # Backup
