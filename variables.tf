@@ -24,12 +24,6 @@ variable "auto_minor_version_upgrade" {
   type        = string
 }
 
-variable "automatic_failover_enabled" {
-  default     = false
-  description = " Specifies whether a read-only replica will be automatically promoted to read/write primary if the existing primary fails."
-  type        = bool
-}
-
 variable "data_tearing_enabled" {
   default     = false
   description = "Enables data tiering. Data tiering is only supported for replication groups using the r6gd node type."
@@ -57,12 +51,6 @@ variable "engine" {
 variable "engine_version" {
   default     = "7.0"
   description = "The version number of the cache engine to be used for the cache clusters in this replication group."
-  type        = string
-}
-
-variable "multi_az_enabled" {
-  default     = false
-  description = "Specifies whether to enable Multi-AZ Support for the replication group."
   type        = string
 }
 
@@ -110,20 +98,10 @@ variable "snapshot_window" {
   type        = string
 }
 
-variable "subnet_ids" {
-  description = "List of VPC Subnet IDs for the cache subnet group."
-  type        = list(string)
-}
-
 variable "transit_encryption_enabled" {
   default     = true
   description = "Whether to enable encryption in transit."
   type        = bool
-}
-
-variable "vpc_id" {
-  description = "The VPC ID where resources are created."
-  type        = string
 }
 
 variable "vpc_subnet_group_name" {

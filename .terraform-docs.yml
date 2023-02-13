@@ -20,9 +20,9 @@ content: |-
   {{- end }}
 
   # Examples
-    ### Full
+    ### Minimal
     ```hcl
-    {{ include "examples/min/main.tf" }}
+    {{ include "examples/minimal/main.tf" }}
     ```
 
 output:

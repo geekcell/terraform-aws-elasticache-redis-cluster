@@ -38,9 +38,23 @@ Comment in these badges if they apply to the repository.
 
 -->
 
-Terraform AWS Elasticache Redis module
+Terraform AWS Elasticache Redis
 
-Terraform module which creates a AWS Elasticache Redis cluster.
+Introducing the AWS ElastiCache Redis Cluster Terraform Module, a highly efficient solution for creating and managing
+your Redis clusters within Amazon Web Services (AWS). This module has been expertly crafted to provide you with a
+simple and streamlined way to create and manage your Redis clusters within AWS ElastiCache.
+
+Our team of experts has years of experience working with AWS ElastiCache and has a deep understanding of the best
+practices and configurations. By using this Terraform module, you can be sure that your Redis clusters are created
+and managed in a secure, efficient, and scalable manner.
+
+This module offers a preconfigured solution for creating Redis clusters, saving you time and effort in the process.
+Whether you're looking to improve the performance of your applications or to implement a highly available and
+scalable cache, this module has you covered.
+
+So, if you're looking for a convenient and reliable solution for creating and managing your Redis clusters within
+AWS ElastiCache, look no further than the AWS ElastiCache Redis Cluster Terraform Module. Give it a try and see the
+difference it can make in your AWS setup!
 
 ## Inputs
 
@@ -49,7 +63,6 @@ Terraform module which creates a AWS Elasticache Redis cluster.
 | <a name="input_apply_immediately"></a> [apply\_immediately](#input\_apply\_immediately) | Specifies whether any modifications are applied immediately, or during the next maintenance window. | `bool` | `true` | no |
 | <a name="input_at_rest_encryption_enabled"></a> [at\_rest\_encryption\_enabled](#input\_at\_rest\_encryption\_enabled) | Whether to enable encryption at rest. | `bool` | `true` | no |
 | <a name="input_auto_minor_version_upgrade"></a> [auto\_minor\_version\_upgrade](#input\_auto\_minor\_version\_upgrade) | Specifies whether minor version engine upgrades will be applied automatically to the underlying Cache Cluster instances during the maintenance window. | `string` | `false` | no |
-| <a name="input_automatic_failover_enabled"></a> [automatic\_failover\_enabled](#input\_automatic\_failover\_enabled) | Specifies whether a read-only replica will be automatically promoted to read/write primary if the existing primary fails. | `bool` | `false` | no |
 | <a name="input_data_tearing_enabled"></a> [data\_tearing\_enabled](#input\_data\_tearing\_enabled) | Enables data tiering. Data tiering is only supported for replication groups using the r6gd node type. | `bool` | `false` | no |
 | <a name="input_description"></a> [description](#input\_description) | The description of the all resources. | `string` | `"Managed by Terraform"` | no |
 | <a name="input_destination_type"></a> [destination\_type](#input\_destination\_type) | For CloudWatch Logs use `cloudwatch-logs` or for Kinesis Data Firehose use `kinesis-firehose`. | `string` | `"cloudwatch-logs"` | no |
@@ -59,7 +72,6 @@ Terraform module which creates a AWS Elasticache Redis cluster.
 | <a name="input_log_format"></a> [log\_format](#input\_log\_format) | Valid values are `json` or `text`. | `string` | `"text"` | no |
 | <a name="input_log_type"></a> [log\_type](#input\_log\_type) | Type of logs, slow-log and engine-log | `list(string)` | <pre>[<br>  "slow-log",<br>  "engine-log"<br>]</pre> | no |
 | <a name="input_maintenance_window"></a> [maintenance\_window](#input\_maintenance\_window) | Specifies the weekly time range for when maintenance on the cache cluster is performed. | `string` | `"Mon:00:00-Mon:03:00"` | no |
-| <a name="input_multi_az_enabled"></a> [multi\_az\_enabled](#input\_multi\_az\_enabled) | Specifies whether to enable Multi-AZ Support for the replication group. | `string` | `false` | no |
 | <a name="input_node_type"></a> [node\_type](#input\_node\_type) | The cluster identifier. If omitted, Terraform will assign a random, unique identifier. | `string` | n/a | yes |
 | <a name="input_num_cache_clusters"></a> [num\_cache\_clusters](#input\_num\_cache\_clusters) | Number of cache clusters (primary and replicas) this replication group will have. If Multi-AZ is enabled, the value of this parameter must be at least 2 | `number` | n/a | yes |
 | <a name="input_port"></a> [port](#input\_port) | Port number on which each of the cache nodes will accept connections. | `number` | `6379` | no |
@@ -67,10 +79,8 @@ Terraform module which creates a AWS Elasticache Redis cluster.
 | <a name="input_security_group_ids"></a> [security\_group\_ids](#input\_security\_group\_ids) | A list of security group IDs to associate with this replication group. | `list(string)` | n/a | yes |
 | <a name="input_snapshot_retention_limit"></a> [snapshot\_retention\_limit](#input\_snapshot\_retention\_limit) | Number of days for which ElastiCache will retain automatic cache cluster snapshots before deleting them. | `number` | `7` | no |
 | <a name="input_snapshot_window"></a> [snapshot\_window](#input\_snapshot\_window) | Daily time range (in UTC) during which ElastiCache will begin taking a daily snapshot of your cache cluster. | `string` | `"03:30-05:30"` | no |
-| <a name="input_subnet_ids"></a> [subnet\_ids](#input\_subnet\_ids) | List of VPC Subnet IDs for the cache subnet group. | `list(string)` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | A mapping of tags to assign to all resources. | `map(string)` | `{}` | no |
 | <a name="input_transit_encryption_enabled"></a> [transit\_encryption\_enabled](#input\_transit\_encryption\_enabled) | Whether to enable encryption in transit. | `bool` | `true` | no |
-| <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | The VPC ID where resources are created. | `string` | n/a | yes |
 | <a name="input_vpc_subnet_group_name"></a> [vpc\_subnet\_group\_name](#input\_vpc\_subnet\_group\_name) | Subnet group name for the Elasticache cluster. | `string` | n/a | yes |
 
 ## Outputs
@@ -84,27 +94,24 @@ Terraform module which creates a AWS Elasticache Redis cluster.
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 4.36 |
-| <a name="provider_random"></a> [random](#provider\_random) | n/a |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 4.4 |
+| <a name="provider_random"></a> [random](#provider\_random) | >= 3.0 |
 
 ## Resources
 
-- resource.aws_elasticache_replication_group.redis (main.tf#10)
-- resource.random_password.main_password (main.tf#100)
+- resource.aws_elasticache_replication_group.redis (main.tf#21)
+- resource.random_password.main_password (main.tf#113)
 
 # Examples
-### Full
+### Minimal
 ```hcl
 module "example" {
   source = "../../"
 
-  name_prefix           = "session-manager"
+  replication_group_id  = "php-session"
   node_type             = "cache.t4g.micro"
   num_cache_clusters    = 2
-  replication_group_id  = "session"
   security_group_ids    = ["sg-12345678910"]
-  subnet_ids            = ["subnet-12345678910"]
-  vpc_id                = "vpc-012345678910"
   vpc_subnet_group_name = "example"
 }
 ```

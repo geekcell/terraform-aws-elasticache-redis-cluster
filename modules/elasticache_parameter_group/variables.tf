@@ -17,7 +17,7 @@ variable "parameters" {
     }
   ]
   description = "The name and Values of the Elasticache parameters."
-  type        = list(object({
+  type = list(object({
     name  = string
     value = string
   }))
