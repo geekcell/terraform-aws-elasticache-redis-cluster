@@ -1,10 +1,21 @@
 /**
- * Terraform AWS Elasticache Redis module
+ * Terraform AWS Elasticache Redis
  *
- * Terraform module which creates a AWS Elasticache Redis cluster.
-
- * The focus on this module lies within it's simplicity by providing default values
- * that should make sense for most use cases.
+ * Introducing the AWS ElastiCache Redis Cluster Terraform Module, a highly efficient solution for creating and managing
+ * your Redis clusters within Amazon Web Services (AWS). This module has been expertly crafted to provide you with a
+ * simple and streamlined way to create and manage your Redis clusters within AWS ElastiCache.
+ *
+ * Our team of experts has years of experience working with AWS ElastiCache and has a deep understanding of the best
+ * practices and configurations. By using this Terraform module, you can be sure that your Redis clusters are created
+ * and managed in a secure, efficient, and scalable manner.
+ *
+ * This module offers a preconfigured solution for creating Redis clusters, saving you time and effort in the process.
+ * Whether you're looking to improve the performance of your applications or to implement a highly available and
+ * scalable cache, this module has you covered.
+ *
+ * So, if you're looking for a convenient and reliable solution for creating and managing your Redis clusters within
+ * AWS ElastiCache, look no further than the AWS ElastiCache Redis Cluster Terraform Module. Give it a try and see the
+ * difference it can make in your AWS setup!
  */
 
 resource "aws_elasticache_replication_group" "redis" {
@@ -68,10 +79,12 @@ resource "aws_elasticache_replication_group" "redis" {
       log_type         = log_delivery_configuration.value
     }
   }
+
+  tags = var.tags
 }
 
 module "cloudwatch_log_group" {
-  source   = "github.com/geekcell/terraform-aws-cloudwatch-log-group?ref=main"
+  source   = "github.com/geekcell/terraform-aws-cloudwatch-log-group?ref=v1.0"
   for_each = toset(var.log_type)
 
   name = "/elasticache-${var.engine}/cluster/${var.replication_group_id}/log/${each.key}"
@@ -84,13 +97,13 @@ module "elasticache_parameter_group" {
 }
 
 module "kms" {
-  source = "github.com/geekcell/terraform-aws-kms?ref=main"
+  source = "github.com/geekcell/terraform-aws-kms?ref=v1.0"
 
   alias = format("alias/%s", "elasticache/cluster/${var.engine}/${var.replication_group_id}")
 }
 
 module "sns" {
-  source = "github.com/geekcell/terraform-aws-sns-email-notification?ref=main"
+  source = "github.com/geekcell/terraform-aws-sns-email-notification?ref=v1.0"
 
   name = var.replication_group_id
 
