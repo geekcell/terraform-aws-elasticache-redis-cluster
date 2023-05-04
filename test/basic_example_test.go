@@ -15,7 +15,7 @@ import (
 )
 
 func TestTerraformBasicExample(t *testing.T) {
-	clusterName := "terraform-test-cluster"
+	clusterName := "terraform-test-cluster-" + GetShortId()
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		TerraformDir: "../examples/basic-example",
@@ -65,4 +65,13 @@ func NewSession(region string) (*session.Session, error) {
 	}
 
 	return sess, nil
+}
+
+func GetShortId() string {
+	githubSha := os.Getenv("GITHUB_SHA")
+	if len(githubSha) >= 7 {
+		return githubSha[0:6]
+	}
+
+	return "local"
 }

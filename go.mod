@@ -6,6 +6,7 @@ require (
 	github.com/aws/aws-sdk-go v1.44.256
 	github.com/gruntwork-io/terratest v0.41.23
 	github.com/stretchr/testify v1.8.2
+	github.com/teris-io/shortid v0.0.0-20220617161101-71ec9f2aa569
 )
 
 require (
