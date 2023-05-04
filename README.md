@@ -112,7 +112,7 @@ module "vpc" {
   name = "${var.name}-main"
   cidr = "10.100.0.0/16"
   azs  = ["eu-central-1a", "eu-central-1b"]
-  
+
   elasticache_subnets = ["10.100.10.0/24", "10.100.11.0/24"]
 }
 
