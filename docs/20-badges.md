@@ -1,12 +1,10 @@
-<!--
-Comment in these badges if they apply to the repository.
-
 ### Code Quality
 [![License](https://img.shields.io/github/license/geekcell/terraform-aws-elasticache-redis-cluster)](https://github.com/geekcell/terraform-aws-elasticache-redis-cluster/blob/master/LICENSE)
 [![GitHub release (latest tag)](https://img.shields.io/github/v/release/geekcell/terraform-aws-elasticache-redis-cluster?logo=github&sort=semver)](https://github.com/geekcell/terraform-aws-elasticache-redis-cluster/releases)
 [![Release](https://github.com/geekcell/terraform-aws-elasticache-redis-cluster/actions/workflows/release.yaml/badge.svg)](https://github.com/geekcell/terraform-aws-elasticache-redis-cluster/actions/workflows/release.yaml)
 [![Validate](https://github.com/geekcell/terraform-aws-elasticache-redis-cluster/actions/workflows/validate.yaml/badge.svg)](https://github.com/geekcell/terraform-aws-elasticache-redis-cluster/actions/workflows/validate.yaml)
 [![Lint](https://github.com/geekcell/terraform-aws-elasticache-redis-cluster/actions/workflows/linter.yaml/badge.svg)](https://github.com/geekcell/terraform-aws-elasticache-redis-cluster/actions/workflows/linter.yaml)
+[![Test](https://github.com/geekcell/terraform-aws-elasticache-redis-cluster/actions/workflows/test.yaml/badge.svg)](https://github.com/geekcell/terraform-aws-elasticache-redis-cluster/actions/workflows/test.yaml)
 
 ### Security
 [![Infrastructure Tests](https://www.bridgecrew.cloud/badges/github/geekcell/terraform-aws-elasticache-redis-cluster/general)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=geekcell%2Fterraform-aws-elasticache-redis-cluster&benchmark=INFRASTRUCTURE+SECURITY)
@@ -32,5 +30,3 @@ Comment in these badges if they apply to the repository.
 [![Infrastructure Tests](https://www.bridgecrew.cloud/badges/github/geekcell/terraform-aws-elasticache-redis-cluster/nist)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=geekcell%2Fterraform-aws-elasticache-redis-cluster&benchmark=NIST-800-53)
 [![Infrastructure Tests](https://www.bridgecrew.cloud/badges/github/geekcell/terraform-aws-elasticache-redis-cluster/hipaa)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=geekcell%2Fterraform-aws-elasticache-redis-cluster&benchmark=HIPAA)
 [![Infrastructure Tests](https://www.bridgecrew.cloud/badges/github/geekcell/terraform-aws-elasticache-redis-cluster/fedramp_moderate)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=geekcell%2Fterraform-aws-elasticache-redis-cluster&benchmark=FEDRAMP+%28MODERATE%29)
-
--->

@@ -17,7 +17,6 @@
  * AWS ElastiCache, look no further than the AWS ElastiCache Redis Cluster Terraform Module. Give it a try and see the
  * difference it can make in your AWS setup!
  */
-
 resource "aws_elasticache_replication_group" "redis" {
 
   # Naming
@@ -83,31 +82,37 @@ resource "aws_elasticache_replication_group" "redis" {
   tags = var.tags
 }
 
-module "cloudwatch_log_group" {
-  source   = "github.com/geekcell/terraform-aws-cloudwatch-log-group?ref=main"
-  for_each = toset(var.log_type)
-
-  name = "/elasticache-${var.engine}/cluster/${var.replication_group_id}/log/${each.key}"
-}
-
 module "elasticache_parameter_group" {
   source = "./modules/elasticache_parameter_group/"
 
   name = var.replication_group_id
 }
 
-module "kms" {
-  source = "github.com/geekcell/terraform-aws-kms?ref=main"
+module "cloudwatch_log_group" {
+  for_each = toset(var.log_type)
 
-  alias = format("alias/%s", "elasticache/cluster/${var.engine}/${var.replication_group_id}")
+  source  = "geekcell/cloudwatch-log-group/aws"
+  version = ">= 1.0.0, < 2.0.0"
+
+  name = "/elasticache-${var.engine}/cluster/${var.replication_group_id}/log/${each.key}"
+  tags = var.tags
+}
+
+module "kms" {
+  source  = "geekcell/kms/aws"
+  version = ">= 1.0.0, < 2.0.0"
+
+  alias = "elasticache/cluster/${var.engine}/${var.replication_group_id}"
+  tags  = var.tags
 }
 
 module "sns" {
-  source = "github.com/geekcell/terraform-aws-sns-email-notification?ref=main"
+  source  = "geekcell/sns-email-notification/aws"
+  version = ">= 1.0.0, < 2.0.0"
 
-  name = var.replication_group_id
-
+  name            = var.replication_group_id
   email_addresses = var.elasticache_event_recipients
+  tags            = var.tags
 }
 
 resource "random_password" "main_password" {

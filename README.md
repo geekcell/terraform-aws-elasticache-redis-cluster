@@ -1,8 +1,5 @@
 <!-- BEGIN_TF_DOCS -->
-[![Geek Cell GmbH](https://raw.githubusercontent.com/geekcell/template-terraform-module/main/docs/assets/logo.svg)](https://www.geekcell.io/)
-
-<!--
-Comment in these badges if they apply to the repository.
+[![Geek Cell GmbH](https://raw.githubusercontent.com/geekcell/.github/main/geekcell-github-banner.png)](https://www.geekcell.io/)
 
 ### Code Quality
 [![License](https://img.shields.io/github/license/geekcell/terraform-aws-elasticache-redis-cluster)](https://github.com/geekcell/terraform-aws-elasticache-redis-cluster/blob/master/LICENSE)
@@ -10,6 +7,7 @@ Comment in these badges if they apply to the repository.
 [![Release](https://github.com/geekcell/terraform-aws-elasticache-redis-cluster/actions/workflows/release.yaml/badge.svg)](https://github.com/geekcell/terraform-aws-elasticache-redis-cluster/actions/workflows/release.yaml)
 [![Validate](https://github.com/geekcell/terraform-aws-elasticache-redis-cluster/actions/workflows/validate.yaml/badge.svg)](https://github.com/geekcell/terraform-aws-elasticache-redis-cluster/actions/workflows/validate.yaml)
 [![Lint](https://github.com/geekcell/terraform-aws-elasticache-redis-cluster/actions/workflows/linter.yaml/badge.svg)](https://github.com/geekcell/terraform-aws-elasticache-redis-cluster/actions/workflows/linter.yaml)
+[![Test](https://github.com/geekcell/terraform-aws-elasticache-redis-cluster/actions/workflows/test.yaml/badge.svg)](https://github.com/geekcell/terraform-aws-elasticache-redis-cluster/actions/workflows/test.yaml)
 
 ### Security
 [![Infrastructure Tests](https://www.bridgecrew.cloud/badges/github/geekcell/terraform-aws-elasticache-redis-cluster/general)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=geekcell%2Fterraform-aws-elasticache-redis-cluster&benchmark=INFRASTRUCTURE+SECURITY)
@@ -35,8 +33,6 @@ Comment in these badges if they apply to the repository.
 [![Infrastructure Tests](https://www.bridgecrew.cloud/badges/github/geekcell/terraform-aws-elasticache-redis-cluster/nist)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=geekcell%2Fterraform-aws-elasticache-redis-cluster&benchmark=NIST-800-53)
 [![Infrastructure Tests](https://www.bridgecrew.cloud/badges/github/geekcell/terraform-aws-elasticache-redis-cluster/hipaa)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=geekcell%2Fterraform-aws-elasticache-redis-cluster&benchmark=HIPAA)
 [![Infrastructure Tests](https://www.bridgecrew.cloud/badges/github/geekcell/terraform-aws-elasticache-redis-cluster/fedramp_moderate)](https://www.bridgecrew.cloud/link/badge?vcs=github&fullRepo=geekcell%2Fterraform-aws-elasticache-redis-cluster&benchmark=FEDRAMP+%28MODERATE%29)
-
--->
 
 Terraform AWS Elasticache Redis
 
@@ -99,25 +95,26 @@ difference it can make in your AWS setup!
 
 ## Resources
 
-- resource.aws_elasticache_replication_group.redis (main.tf#21)
-- resource.random_password.main_password (main.tf#113)
+- resource.aws_elasticache_replication_group.redis (main.tf#20)
+- resource.random_password.main_password (main.tf#118)
 
 # Examples
-### Minimal
+### Basic Example
 ```hcl
 module "vpc" {
   source  = "registry.terraform.io/terraform-aws-modules/vpc/aws"
-  version = "~> 3.19"
+  version = "~> 5.0.0"
 
-  name = "${var.name}-main"
-  cidr = "10.100.0.0/16"
-  azs  = ["eu-central-1a", "eu-central-1b"]
-
+  name                = "${var.name}-main"
+  cidr                = "10.100.0.0/16"
+  azs                 = ["eu-central-1a", "eu-central-1b"]
+  private_subnets     = ["10.100.1.0/24", "10.100.2.0/24"]
   elasticache_subnets = ["10.100.10.0/24", "10.100.11.0/24"]
 }
 
 module "redis_security_group" {
-  source = "github.com/geekcell/terraform-aws-security-group?ref=main"
+  source  = "geekcell/security-group/aws"
+  version = ">= 1.0.0, < 2.0.0"
 
   name   = "${var.name}-redis"
   vpc_id = module.vpc.vpc_id
