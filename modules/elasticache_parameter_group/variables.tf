@@ -10,15 +10,16 @@ variable "name" {
 }
 
 variable "parameters" {
-  default = [
-    {
-      name  = "maxmemory-policy"
-      value = "volatile-lru"
-    }
-  ]
+  default     = []
   description = "The name and Values of the Elasticache parameters."
   type = list(object({
     name  = string
     value = string
   }))
+}
+
+variable "tags" {
+  default     = {}
+  description = "A mapping of tags to assign to all resources."
+  type        = map(string)
 }
