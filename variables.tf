@@ -18,6 +18,18 @@ variable "at_rest_encryption_enabled" {
   type        = bool
 }
 
+variable "kms_key_id" {
+  description = "The ARN of the AWS KMS to encrypt data at rest. Uses the AWS service managed encryption if not specified."
+  default     = null
+  type        = string
+}
+
+variable "enable_customer_managed_kms" {
+  description = "If enabled, will create a customer managed KMS key for at-rest encryption."
+  default     = false
+  type        = bool
+}
+
 variable "auto_minor_version_upgrade" {
   default     = false
   description = "Specifies whether minor version engine upgrades will be applied automatically to the underlying Cache Cluster instances during the maintenance window."
@@ -34,12 +46,6 @@ variable "description" {
   default     = "Managed by Terraform"
   description = "The description of the all resources."
   type        = string
-}
-
-variable "elasticache_event_recipients" {
-  default     = []
-  description = "Recipients of the elasticache events."
-  type        = list(string)
 }
 
 variable "engine" {
@@ -109,10 +115,45 @@ variable "vpc_subnet_group_name" {
   type        = string
 }
 
-# Cloudwatch log group delivery
-variable "destination_type" {
+# Auth Token
+variable "auth_token_length" {
+  description = "The length of the generated auth token."
+  default     = 24
+  type        = number
+}
+
+variable "auth_token_special_characters" {
+  description = "Whether to include special characters in the generated auth token."
+  default     = false
+  type        = bool
+}
+
+# Parameter Group
+variable "parameter_group_name" {
+  description = "The name of the ElastiCache parameter group. Defaults to the cluster name."
+  default     = null
+  type        = string
+}
+
+variable "parameter_group_family" {
+  description = "The family of the ElastiCache parameter group. Defaults to engine and engine_version."
+  default     = null
+  type        = string
+}
+
+variable "parameters" {
+  description = "Set custom parameters via a parameter group."
+  default     = []
+  type = list(object({
+    name  = string
+    value = string
+  }))
+}
+
+# Logging
+variable "log_destination_type" {
   default     = "cloudwatch-logs"
-  description = "For CloudWatch Logs use `cloudwatch-logs` or for Kinesis Data Firehose use `kinesis-firehose`."
+  description = "For CloudWatch Logs use `cloudwatch-logs` or for Kinesis Data Firehose use `kinesis-firehose`. Only 'cloudwatch-logs' supported at the moment."
   type        = string
 }
 
@@ -126,10 +167,48 @@ variable "log_type" {
   default     = ["slow-log", "engine-log"]
   type        = list(string)
   description = "Type of logs, slow-log and engine-log"
+
   validation {
     condition = alltrue([
       for type in var.log_type : contains(["slow-log", "engine-log"], type)
     ])
-    error_message = "The log_type allowed are only slow-log and engine-log."
+    error_message = "The allowed log types are 'slow-log' and 'engine-log'."
   }
+}
+
+variable "log_retention_in_days" {
+  description = "The number of days log events are kept in CloudWatch Logs."
+  default     = 30
+  type        = number
+}
+
+variable "log_skip_destroy" {
+  description = "Whether to skip the deletion of the log groups when deleting the log group resources."
+  default     = false
+  type        = bool
+}
+
+variable "log_enable_customer_managed_kms" {
+  description = "Whether to enable customer managed KMS key for CloudWatch Logs encryption."
+  default     = false
+  type        = bool
+}
+
+# SNS Topic
+variable "enable_sns_sse_encryption" {
+  description = "Enable SSE Encryption for SNS Topic."
+  default     = true
+  type        = bool
+}
+
+variable "sns_kms_master_key_id" {
+  description = "The ID of an AWS KMS key for the SNS topic."
+  default     = "alias/aws/sns"
+  type        = string
+}
+
+variable "sns_event_recipients" {
+  default     = []
+  description = "Recipients of the ElastiCache SNS event topic. Should be a list of E-Mails."
+  type        = list(string)
 }

@@ -58,23 +58,35 @@ difference it can make in your AWS setup!
 |------|-------------|------|---------|:--------:|
 | <a name="input_apply_immediately"></a> [apply\_immediately](#input\_apply\_immediately) | Specifies whether any modifications are applied immediately, or during the next maintenance window. | `bool` | `true` | no |
 | <a name="input_at_rest_encryption_enabled"></a> [at\_rest\_encryption\_enabled](#input\_at\_rest\_encryption\_enabled) | Whether to enable encryption at rest. | `bool` | `true` | no |
+| <a name="input_auth_token_length"></a> [auth\_token\_length](#input\_auth\_token\_length) | The length of the generated auth token. | `number` | `24` | no |
+| <a name="input_auth_token_special_characters"></a> [auth\_token\_special\_characters](#input\_auth\_token\_special\_characters) | Whether to include special characters in the generated auth token. | `bool` | `false` | no |
 | <a name="input_auto_minor_version_upgrade"></a> [auto\_minor\_version\_upgrade](#input\_auto\_minor\_version\_upgrade) | Specifies whether minor version engine upgrades will be applied automatically to the underlying Cache Cluster instances during the maintenance window. | `string` | `false` | no |
 | <a name="input_data_tearing_enabled"></a> [data\_tearing\_enabled](#input\_data\_tearing\_enabled) | Enables data tiering. Data tiering is only supported for replication groups using the r6gd node type. | `bool` | `false` | no |
 | <a name="input_description"></a> [description](#input\_description) | The description of the all resources. | `string` | `"Managed by Terraform"` | no |
-| <a name="input_destination_type"></a> [destination\_type](#input\_destination\_type) | For CloudWatch Logs use `cloudwatch-logs` or for Kinesis Data Firehose use `kinesis-firehose`. | `string` | `"cloudwatch-logs"` | no |
-| <a name="input_elasticache_event_recipients"></a> [elasticache\_event\_recipients](#input\_elasticache\_event\_recipients) | Recipients of the elasticache events. | `list(string)` | `[]` | no |
+| <a name="input_enable_customer_managed_kms"></a> [enable\_customer\_managed\_kms](#input\_enable\_customer\_managed\_kms) | If enabled, will create a customer managed KMS key for at-rest encryption. | `bool` | `false` | no |
+| <a name="input_enable_sns_sse_encryption"></a> [enable\_sns\_sse\_encryption](#input\_enable\_sns\_sse\_encryption) | Enable SSE Encryption for SNS Topic. | `bool` | `true` | no |
 | <a name="input_engine"></a> [engine](#input\_engine) | Name of the cache engine to be used for the clusters in this replication group. | `string` | `"redis"` | no |
 | <a name="input_engine_version"></a> [engine\_version](#input\_engine\_version) | The version number of the cache engine to be used for the cache clusters in this replication group. | `string` | `"7.0"` | no |
+| <a name="input_kms_key_id"></a> [kms\_key\_id](#input\_kms\_key\_id) | The ARN of the AWS KMS to encrypt data at rest. Uses the AWS service managed encryption if not specified. | `string` | `null` | no |
+| <a name="input_log_destination_type"></a> [log\_destination\_type](#input\_log\_destination\_type) | For CloudWatch Logs use `cloudwatch-logs` or for Kinesis Data Firehose use `kinesis-firehose`. Only 'cloudwatch-logs' supported at the moment. | `string` | `"cloudwatch-logs"` | no |
+| <a name="input_log_enable_customer_managed_kms"></a> [log\_enable\_customer\_managed\_kms](#input\_log\_enable\_customer\_managed\_kms) | Whether to enable customer managed KMS key for CloudWatch Logs encryption. | `bool` | `false` | no |
 | <a name="input_log_format"></a> [log\_format](#input\_log\_format) | Valid values are `json` or `text`. | `string` | `"text"` | no |
+| <a name="input_log_retention_in_days"></a> [log\_retention\_in\_days](#input\_log\_retention\_in\_days) | The number of days log events are kept in CloudWatch Logs. | `number` | `30` | no |
+| <a name="input_log_skip_destroy"></a> [log\_skip\_destroy](#input\_log\_skip\_destroy) | Whether to skip the deletion of the log groups when deleting the log group resources. | `bool` | `false` | no |
 | <a name="input_log_type"></a> [log\_type](#input\_log\_type) | Type of logs, slow-log and engine-log | `list(string)` | <pre>[<br>  "slow-log",<br>  "engine-log"<br>]</pre> | no |
 | <a name="input_maintenance_window"></a> [maintenance\_window](#input\_maintenance\_window) | Specifies the weekly time range for when maintenance on the cache cluster is performed. | `string` | `"Mon:00:00-Mon:03:00"` | no |
 | <a name="input_node_type"></a> [node\_type](#input\_node\_type) | The cluster identifier. If omitted, Terraform will assign a random, unique identifier. | `string` | n/a | yes |
 | <a name="input_num_cache_clusters"></a> [num\_cache\_clusters](#input\_num\_cache\_clusters) | Number of cache clusters (primary and replicas) this replication group will have. If Multi-AZ is enabled, the value of this parameter must be at least 2 | `number` | n/a | yes |
+| <a name="input_parameter_group_family"></a> [parameter\_group\_family](#input\_parameter\_group\_family) | The family of the ElastiCache parameter group. Defaults to engine and engine\_version. | `string` | `null` | no |
+| <a name="input_parameter_group_name"></a> [parameter\_group\_name](#input\_parameter\_group\_name) | The name of the ElastiCache parameter group. Defaults to the cluster name. | `string` | `null` | no |
+| <a name="input_parameters"></a> [parameters](#input\_parameters) | Set custom parameters via a parameter group. | <pre>list(object({<br>    name  = string<br>    value = string<br>  }))</pre> | `[]` | no |
 | <a name="input_port"></a> [port](#input\_port) | Port number on which each of the cache nodes will accept connections. | `number` | `6379` | no |
 | <a name="input_replication_group_id"></a> [replication\_group\_id](#input\_replication\_group\_id) | ID of the replication group to which this cluster should belong. | `string` | n/a | yes |
 | <a name="input_security_group_ids"></a> [security\_group\_ids](#input\_security\_group\_ids) | A list of security group IDs to associate with this replication group. | `list(string)` | n/a | yes |
 | <a name="input_snapshot_retention_limit"></a> [snapshot\_retention\_limit](#input\_snapshot\_retention\_limit) | Number of days for which ElastiCache will retain automatic cache cluster snapshots before deleting them. | `number` | `7` | no |
 | <a name="input_snapshot_window"></a> [snapshot\_window](#input\_snapshot\_window) | Daily time range (in UTC) during which ElastiCache will begin taking a daily snapshot of your cache cluster. | `string` | `"03:30-05:30"` | no |
+| <a name="input_sns_event_recipients"></a> [sns\_event\_recipients](#input\_sns\_event\_recipients) | Recipients of the ElastiCache SNS event topic. Should be a list of E-Mails. | `list(string)` | `[]` | no |
+| <a name="input_sns_kms_master_key_id"></a> [sns\_kms\_master\_key\_id](#input\_sns\_kms\_master\_key\_id) | The ID of an AWS KMS key for the SNS topic. | `string` | `"alias/aws/sns"` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | A mapping of tags to assign to all resources. | `map(string)` | `{}` | no |
 | <a name="input_transit_encryption_enabled"></a> [transit\_encryption\_enabled](#input\_transit\_encryption\_enabled) | Whether to enable encryption in transit. | `bool` | `true` | no |
 | <a name="input_vpc_subnet_group_name"></a> [vpc\_subnet\_group\_name](#input\_vpc\_subnet\_group\_name) | Subnet group name for the Elasticache cluster. | `string` | n/a | yes |
@@ -83,6 +95,7 @@ difference it can make in your AWS setup!
 
 | Name | Description |
 |------|-------------|
+| <a name="output_auth_token"></a> [auth\_token](#output\_auth\_token) | The generate auth token used to access the Redis cluster. |
 | <a name="output_primary_endpoint_address"></a> [primary\_endpoint\_address](#output\_primary\_endpoint\_address) | Address of the endpoint for the primary node in the replication group, if the cluster mode is disabled. |
 | <a name="output_reader_endpoint_address"></a> [reader\_endpoint\_address](#output\_reader\_endpoint\_address) | Address of the endpoint for the reader node in the replication group, if the cluster mode is disabled. |
 
@@ -96,7 +109,7 @@ difference it can make in your AWS setup!
 ## Resources
 
 - resource.aws_elasticache_replication_group.redis (main.tf#20)
-- resource.random_password.main_password (main.tf#118)
+- resource.random_password.main_password (main.tf#85)
 
 # Examples
 ### Basic Example
