@@ -67,7 +67,7 @@ variable "maintenance_window" {
 }
 
 variable "node_type" {
-  description = "The cluster identifier. If omitted, Terraform will assign a random, unique identifier."
+  description = "Node type to use. See https://aws.amazon.com/elasticache/pricing/ for supported types."
   type        = string
 }
 
